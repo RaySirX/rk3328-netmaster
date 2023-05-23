@@ -1,0 +1,90 @@
+#!/bin/bash -xe
+
+[ -f defaults ] && source defaults
+[ -f .secrets ] && source .secrets
+
+cat << EOF > ${PACKER_CONFIG_DIR?}/config.json
+{
+  "user_name": "<user>",
+  "user_password": "<password>",
+  "user_public_key": "<public ssh key for user>",
+  "pi_password": "<another password>",
+  "pihole_web_password": "<yet anotehr password>",
+  "host_name": "piholr",
+  "ipv4_address": "10.0.0.10/24"
+}
+EOF
+
+cat << 'EOF' > ${PACKER_CONFIG_DIR?}/pi-hole.json
+{
+  "variables": {
+    "host_name": "generic",
+    "user_name": "",
+    "user_password": "",
+    "user_public_key": "",
+    "pi_password": "",
+    "pihole_web_password": "",
+    "ipv4_address": "",
+    "ipv6_address": ""
+  },
+  "sensitive-variables": [
+    "user_password",
+    "pi_password",
+    "pihole_web_password"
+  ],
+  "builders": [
+    {
+      "type": "arm-image",
+      "iso_url": "${DEFAULT_PI_REPO?}/${DEFAULT_PI_DISTRO?}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "apt-get upgrade -y",
+        "touch /boot/ssh",
+        "echo '{{user `host_name`}}' | tee /etc/hostname",
+        "mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "sshd_config",
+      "destination": "/etc/ssh/sshd_config"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "if [ ! -z '{{user `pi_password`}}' ]; then",
+        "  echo 'pi:{{user `pi_password`}}' | chpasswd",
+        "fi",
+        "rm /etc/sudoers.d/010_pi-nopasswd",
+        "echo 'pi ALL=(ALL) PASSWD: ALL' | tee /etc/sudoers.d/010_pi-passwd"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir -p /etc/pihole"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "setupVars.conf",
+      "destination": "/etc/pihole/setupVars.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "WEBPASSWORD=$(echo -n '{{user `pihole_web_password`}}' | sha256sum | awk '{printf \"%s\",$1 }' | sha256sum | awk '{printf \"%s\",$1}')",
+        "echo \"WEBPASSWORD=${WEBPASSWORD}\" | tee -a /etc/pihole/setupVars.conf",
+        "echo 'IPV4_ADDRESS={{user `ipv4_address`}}' | tee -a /etc/pihole/setupVars.conf",
+        "echo 'IPV6_ADDRESS={{user `ipv6_address`}}' | tee -a /etc/pihole/setupVars.conf",
+        "curl -L https://install.pi-hole.net | bash /dev/stdin --unattended"
+      ]
+    }
+  ]
+}
+EOF
