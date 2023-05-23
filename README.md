@@ -14,7 +14,7 @@ Packerized Raspbian Image as a (for now) standalone network master
 ./defaults
 
 ./secrets
--DEFAULT_PI_USER_PASS
+-DEFAULT_USER_PASS
 
 ## Build It
 ./buildIt
@@ -24,3 +24,6 @@ go version go1.19.3 linux/amd64
 
 # References
 [Packer Raspbian] (https://github.com/hedlund/packer-pi-hole)
+
+[Build a Raspberry Pi image with Packer – packer-builder-arm] https://linuxhit.com/build-a-raspberry-pi-image-packer-packer-builder-arm/
+- bdstar -> libarchive-tools

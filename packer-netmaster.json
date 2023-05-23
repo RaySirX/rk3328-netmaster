@@ -1,0 +1,44 @@
+{
+    "variables": {
+      "host_name": "generic",
+      "user_name": "",
+      "user_password": ""
+    },
+    "sensitive-variables": [
+      "user_password"
+    ],
+    "builders": [
+      {
+        "type": "arm",
+        "iso_url": "${DEFAULT_PI_REPO?}/${DEFAULT_PI_DISTRO?}"
+      }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "touch /boot/ssh"
+            ]
+        },
+        {
+        "type": "shell",
+        "inline": [
+            "echo '{{user `host_name`}}' | tee /etc/hostname"
+        ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "useradd -p $(openssl passwd -1 {{user `user_password`}}) -s /bin/bash -m {{user `user_name`}}",
+                "echo '{{user `user_name`}} ALL=(ALL) PASSWD: ALL' | tee /etc/sudoers.d/020_{{user `user_name`}}-passwd"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+            "apt-get update",
+            "apt-get upgrade -y"
+            ]
+        }
+    ]
+  }

@@ -1,3 +1,7 @@
+# unset $(compgen -v | egrep "^BUILDENV")
+# unset $(compgen -v | egrep "^PACKER")
+# unset $(compgen -v | egrep "^BUILD_OS")
+
 export BUILDENV=${BUILDENV:-${PWD}/buildEnv}
 export BUILDENV_BIN=${BUILDENV_BIN:-${BUILDENV?}/bin}
 export BUILDENV_DOWNLOADS=${BUILDENV_DOWNLOADS:-${BUILDENV?}/downloads}
@@ -9,20 +13,20 @@ export BUILDENV_PACKER=${BUILDENV_PACKER:-${BUILDENV_BIN?}/packer}
 export BUILDENV_PACKER_PLUGIN_ARM=${BUILDENV_PACKER_PLUGIN_ARM:-${BUILDENV?}/packer-builder-arm}
 
 export PACKER_HOME_DIR=${PACKER_HOME_DIR:-${BUILDENV?}}
-export PACKER_CONFIG_DIR=${PACKER_CONFIG_DIR:-${PACKER_HOME_DIR}/config}
-export PACKER_PLUGIN_PATH=${PACKER_PLUGIN_PATH:-${PACKER_HOME_DIR}/plugins}
+export PACKER_CONFIG_DIR=${PACKER_HOME_DIR:-${PACKER_HOME_DIR}/config}
+export PACKER_PLUGIN_PATH=${PACKER_PLUGIN_PATH:-${PACKER_CONFIG_DIR}/plugins}
 export PACKER=${PACKER:-${BUILDENV_BIN}/packer}
 
 #
 # by definition it's impossible to generate 4 char UUIDs .. but not unpossible
 #
 UUID4=$(shuf -e {a..z} {0..9} | head -4 | paste -sd '')
-export DEFAULT_HOSTNAME=${DEFAULT_HOSTNAME:-netmaster-${UUID4}}
+export BUILD_OS_HOSTNAME=${BUILD_OS_HOSTNAME:-netmaster-${UUID4}}
 #
 # initial OS user with sudo
 #
-export DEFAULT_USER=config
-#export DEFAULT_USER_PASS=${DEFAULT_USER_PASS?'check .secret file'}
+export BUILD_OS_USER=config
+#export BUILD_USER_PASS=${BUILD_USER_PASS?'check .secret file'}
 
-export DEFAULT_OS_REPO=${DEFAULT_PI_REPO:-https://distro.libre.computer/ci/raspbian/11}
-export DEFAULT_OS_DISTRO=${DEFAULT_PI_DISTRO:-2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+export BUILD_OS_REPO=${BUILD_OS_REPO:-https://distro.libre.computer/ci/raspbian/11}
+export BUILD_OS_DISTRO=${BUILD_OS_DISTRO:-2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
