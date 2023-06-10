@@ -10,3 +10,5 @@ cat << EOF > ${PACKER_CONFIG_DIR?}/config.json
   "user_password": "${BUILD_OS_USER_PASS?}"
 }
 EOF
+
+packer build -var-file ${PACKER_CONFIG_DIR?}/config.json mkaczanowski-packer-netmaster.json

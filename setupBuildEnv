@@ -3,6 +3,13 @@
 [ -f defaults ] && source defaults
 [ -f .secrets ] && source .secrets
 
+#sudo apt install -y git
+#sudo apt install -y unzip
+#sudo apt install -y qemu-user-static
+#sudo apt install -y e2fsprogs
+#sudo apt install -y dosfstools
+#sudo apt install -y libarchive-tools # bsdtar
+
 mkdir -p ${BUILDENV_BIN?}
 mkdir -p ${BUILDENV_DOWNLOADS?}
 
@@ -11,8 +18,7 @@ wget -P ${BUILDENV_DOWNLOADS} ${BUILDENV_PACKER_REPO?}/${BUILDENV_PACKER_DISTRO?
 unzip -o ${BUILDENV_DOWNLOADS}/${BUILDENV_PACKER_DISTRO##*/} -d buildEnv/bin
 
 rm -rf ${BUILDENV}/packer-builder-arm
-git clone https://github.com/solo-io/packer-builder-arm-image ${BUILDENV}/packer-builder-arm
-#git clone https://github.com/mkaczanowski/packer-builder-arm ${BUILDENV}/packer-builder-arm
+git clone https://github.com/mkaczanowski/packer-builder-arm ${BUILDENV}/packer-builder-arm
 (
   cd ${BUILDENV?}/packer-builder-arm
   go mod download

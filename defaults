@@ -30,3 +30,6 @@ export BUILD_OS_USER=config
 
 export BUILD_OS_REPO=${BUILD_OS_REPO:-https://distro.libre.computer/ci/raspbian/11}
 export BUILD_OS_DISTRO=${BUILD_OS_DISTRO:-2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+
+export DEFAULT_PI_REPO=${DEFAULT_PI_REPO:-https://downloads.raspberrypi.org/raspios_lite_armhf/images}
+export DEFAULT_PI_DISTRO=${DEFAULT_PI_DISTRO:-raspios_lite_armhf-2020-12-04/2020-12-02-raspios-buster-armhf-lite.zip}
