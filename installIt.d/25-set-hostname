@@ -1,0 +1,34 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    25-set-hostname - image set hostname
+#U
+#U SYNOPSIS
+#U    25-set-hostname <pi_distro_mount_dir> <pi_hostname> <pi_dns_domain>
+#U
+#U DESCRIPTION
+#U    Inject raspbian wifi into wpa_supplicant.conf into image
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U    pi_hostname|[BUILD_OS_HOSTNAME]                 - hostname unqualified
+#U    pi_dns_domain|[BUILD_OS_DNS_DOMAIN]             - DNS domain
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+pi_hostname=${2:-${BUILD_OS_HOSTNAME?"$(usage)"}}
+pi_dns_domain=${3:-${BUILD_OS_DNS_DOMAIN?"$(usage)"}}
+
+echo "${pi_hostname}.${pi_dns_domain}" > ${pi_distro_mount_dir}/etc/hostname
+
+sed -i '/^127.0.1.1/d' ${pi_distro_mount_dir}/etc/hosts
+cat << EOF >> ${pi_distro_mount_dir}/etc/hosts
+127.0.1.1  ${pi_hostname} ${pi_hostname}.${pi_dns_domain}
+EOF

@@ -1,8 +1,9 @@
 {
     "variables": {
-      "host_name": "generic",
-      "user_name": "",
-      "user_password": ""
+      "host_name": "netmaster",
+      "user_name": "config",
+      "user_password": "passw0rd",
+      "distro_url": "https://distro.libre.computer/ci/raspbian/11/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz"
     },
     "sensitive-variables": [
       "user_password"
@@ -16,7 +17,7 @@
       "file_unarchive_cmd": ["xz", "--decompress", "$ARCHIVE_PATH"],
       "image_build_method": "reuse",
       "image_path": "netmaster.img",
-      "image_size": "3.1G",
+      "image_size": "6.2G",
       "image_type": "dos",
       "image_partitions": [
         {
@@ -32,7 +33,7 @@
           "type": "83",
           "start_sector": "526336",
           "filesystem": "ext4",
-          "size": "2.8G",
+          "size": "5.8G",
           "mountpoint": "/"
         }
   
@@ -59,13 +60,6 @@
             "inline": [
                 "useradd -p $(openssl passwd -1 {{user `user_password`}}) -s /bin/bash -m {{user `user_name`}}",
                 "echo '{{user `user_name`}} ALL=(ALL) PASSWD: ALL' | tee /etc/sudoers.d/020_{{user `user_name`}}-passwd"
-            ]
-        },
-        {
-            "type": "shell",
-            "inline": [
-            "apt-get update",
-            "apt-get upgrade -y"
             ]
         }
     ]

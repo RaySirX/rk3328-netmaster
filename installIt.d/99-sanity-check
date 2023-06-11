@@ -1,0 +1,52 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    99-sanity-check - sanity check build environment
+#U
+#U SYNOPSIS
+#U    99-sanity-check <pi_distro_mount_dir>
+#U
+#U DESCRIPTION
+#U    Sanity check build environment
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} ENVIRONMENT VARIABLES
+echo $(date -I) - ${0##*/} ----------------------------
+env
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} MOUNTS
+echo $(date -I) - ${0##*/} ----------------------------
+df -h
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} DIRECTORY - PWD
+echo $(date -I) - ${0##*/} ----------------------------
+pwd
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} DIRECTORY - IMAGE /
+echo $(date -I) - ${0##*/} ----------------------------
+ls /
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} DIRECTORY - IMAGE /etc
+echo $(date -I) - ${0##*/} ----------------------------
+ls /etc
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} DIRECTORY - IMAGE /boot
+echo $(date -I) - ${0##*/} ----------------------------
+ls /boot
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} DIRECTORY - IMAGE /boot/firmware
+echo $(date -I) - ${0##*/} ----------------------------
+ls /boot/firmware

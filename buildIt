@@ -3,12 +3,27 @@
 [ -f defaults ] && source defaults
 [ -f .secrets ] && source .secrets
 
-cat << EOF > ${PACKER_CONFIG_DIR?}/config.json
+cat << EOF > ${BUILD_CONFIG_DIR?}/config.json
 {
   "host_name": "${BUILD_OS_HOSTNAME?}",
   "user_name": "${BUILD_OS_USER?}",
-  "user_password": "${BUILD_OS_USER_PASS?}"
+  "user_password": "${BUILD_OS_USER_PASS?}",
+  "image_file_name": "${BUILD_OS_HOSTNAME?}.img"
 }
 EOF
 
-packer build -var-file ${PACKER_CONFIG_DIR?}/config.json mkaczanowski-packer-netmaster.json
+#
+# Raspbian OS image is btrfs
+# clear the btrfs cache to prevent "error 32" -> file exists from mounting
+# raspbian image during build
+#
+sudo btrfs device scan --forget
+docker run --rm --privileged \
+  -e DEFAULT_PI_DISTRO_MOUNT_DIR=/ \
+  -e BUILD_OS_USER=${BUILD_OS_USER?} \
+  -e BUILD_OS_USER_PASS=${BUILD_OS_USER_PASS?} \
+  -e BUILD_OS_HOSTNAME=${BUILD_OS_HOSTNAME?} \
+  -e BUILD_OS_DNS_DOMAIN=${BUILD_OS_DNS_DOMAIN?} \
+  -v /dev:/dev \
+  -v ${PWD}:/build mkaczanowski/packer-builder-arm:latest \
+  build -var-file /build/buildEnv/config.json mkaczanowski-packer-netmaster.pkr.hcl

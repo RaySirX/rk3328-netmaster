@@ -1,0 +1,32 @@
+#!/bin/bash -xe
+#U
+#U NAME
+#U    10-raspbian-setup-default-user - raspbian create default user:password
+#U
+#U SYNOPSIS
+#U    10-raspbian-setup-default-user <pi_distro_mount_dir> <pi_user> <pi_user_pass>
+#U
+#U DESCRIPTION
+#U    Inject raspbian inital userid:password into userconf.txt into image
+#U    
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U    pi_user|[BUILD_OS_USER]                         - image userid
+#U    pi_user_pass|[BUILD_OS_USER_PASS]               - image user password
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+pi_user=${2:-${BUILD_OS_USER?"$(usage)"}}
+pi_user_pass=${3:-${BUILD_OS_USER_PASS?"$(usage)"}}
+
+cat << EOF > ${pi_distro_mount_dir}/boot/firmware/userconf.txt
+${pi_user}:$(echo ${pi_user_pass} | openssl passwd -6 -stdin)
+EOF

@@ -1,0 +1,44 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    15-setup-wireless - setup image wifi settings
+#U
+#U SYNOPSIS
+#U    15-setup-wireless <pi_distro_file> <pi_ssid> <pi_ssid_pass>
+#U
+#U DESCRIPTION
+#U    Inject raspbian wifi into wpa_supplicant.conf into image
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U    pi_ssid|[DEFAULT_PI_SSID]                         - wifi ssid
+#U    pi_ssid_pass|[DEFAULT_PI_SSID_PASS]               - wifi password
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+pi_ssid=${2:-${DEFAULT_PI_SSID?"$(usage)"}}
+pi_ssid_pass=${3:-${DEFAULT_PI_SSID_PASS?"$(usage)"}}
+
+cat << EOF > ${pi_distro_mount_dir}/boot/wpa_supplicant.conf
+country=ca
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+network={
+  ssid="${pi_ssid}"
+  scan_ssid=1
+  psk="${pi_ssid_pass}"
+  key_mgmt=WPA-PSK
+}
+EOF
+
+
+
+
+

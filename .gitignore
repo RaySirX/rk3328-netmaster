@@ -3,3 +3,5 @@ crash.log
 downloads/*
 *.swp
 buildEnv/*
+*.img
+.packer_cache/*

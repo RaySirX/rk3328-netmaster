@@ -17,14 +17,4 @@ mkdir -p ${BUILDENV_DOWNLOADS?}
 wget -P ${BUILDENV_DOWNLOADS} ${BUILDENV_PACKER_REPO?}/${BUILDENV_PACKER_DISTRO?}
 unzip -o ${BUILDENV_DOWNLOADS}/${BUILDENV_PACKER_DISTRO##*/} -d buildEnv/bin
 
-rm -rf ${BUILDENV}/packer-builder-arm
-git clone https://github.com/mkaczanowski/packer-builder-arm ${BUILDENV}/packer-builder-arm
-(
-  cd ${BUILDENV?}/packer-builder-arm
-  go mod download
-  go build
-)
-mkdir -p ${PACKER_PLUGIN_PATH?}
-ln -fs ${BUILDENV}/packer-builder-arm/packer-builder-arm ${PACKER_PLUGIN_PATH}/.
-
-mkdir -p ${PACKER_CONFIG_DIR?}
+docker pull mkaczanowski/packer-builder-arm:latest
