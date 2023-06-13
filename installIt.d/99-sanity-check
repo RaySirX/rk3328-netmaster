@@ -54,3 +54,15 @@ echo $(date -I) - ${0##*/} ----------------------------
 echo $(date -I) - ${0##*/} OS Release
 echo $(date -I) - ${0##*/} ----------------------------
 cat /etc/*-release
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} Accounts /etc/passwd
+echo $(date -I) - ${0##*/} ----------------------------
+cat /etc/passwd
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} Networking
+echo $(date -I) - ${0##*/} ----------------------------
+ifconfig -a
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} Install packages
+echo $(date -I) - ${0##*/} ----------------------------
+dpkg -l

@@ -1,0 +1,25 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    40-install-unbound
+#U
+#U SYNOPSIS
+#U    40-install-unbound <pi_distro_mount_dir>
+#U
+#U DESCRIPTION
+#U    Unbound
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+
+apt-get install unbound -y

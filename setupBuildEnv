@@ -18,3 +18,6 @@ wget -P ${BUILDENV_DOWNLOADS} ${BUILDENV_PACKER_REPO?}/${BUILDENV_PACKER_DISTRO?
 unzip -o ${BUILDENV_DOWNLOADS}/${BUILDENV_PACKER_DISTRO##*/} -d buildEnv/bin
 
 docker pull mkaczanowski/packer-builder-arm:latest
+
+curl -fsSL https://get.docker.com -o installIt.d/46-install-docker
+chmod +x installIt.d/46-install-docker

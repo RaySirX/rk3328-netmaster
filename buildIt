@@ -25,5 +25,7 @@ docker run --rm --privileged \
   -e BUILD_OS_HOSTNAME=${BUILD_OS_HOSTNAME?} \
   -e BUILD_OS_DNS_DOMAIN=${BUILD_OS_DNS_DOMAIN?} \
   -v /dev:/dev \
-  -v ${PWD}:/build mkaczanowski/packer-builder-arm:latest \
-  build -var-file /build/buildEnv/config.json mkaczanowski-packer-netmaster.pkr.hcl
+  -v ${PWD}:/build \
+  mkaczanowski/packer-builder-arm:latest \
+  build -var-file /build/buildEnv/config.json \
+    mkaczanowski-packer-netmaster.pkr.hcl

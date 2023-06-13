@@ -1,0 +1,32 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    50-install-pihole - pihole recursive DNS resolver
+#U
+#U SYNOPSIS
+#U    50-install-pihole <pi_distro_mount_dir>
+#U
+#U DESCRIPTION
+#U    pihole install
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+
+set -x
+cd /root
+
+git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
+cd "Pi-hole/automated install/"
+ls
+set +x
+bash basic-install.sh

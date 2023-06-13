@@ -4,6 +4,10 @@
 
 Packerized Raspbian Image as a (for now) standalone network master
 
+[SDM!] (https://github.com/gitbls/sdm/blob/master/QuickStart.md)
+- trying it
+- could do away with packer
+
 ## Dockerized onto rk3328
 - TP-Link Omada Controller
 - Unbound DNS
