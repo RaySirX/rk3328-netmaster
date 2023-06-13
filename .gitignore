@@ -1,4 +1,4 @@
-crash.log
+*.log
 .secret*
 downloads/*
 *.swp
