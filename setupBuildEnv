@@ -21,3 +21,6 @@ docker pull mkaczanowski/packer-builder-arm:latest
 
 curl -fsSL https://get.docker.com -o installIt.d/46-install-docker
 chmod +x installIt.d/46-install-docker
+
+curl -sSL https://install.pi-hole.net -o installIt.d/51-install-pihole
+chmod +x installIt.d/51-install-pihole

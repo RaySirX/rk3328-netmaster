@@ -27,6 +27,10 @@ echo $(date -I) - ${0##*/} ENVIRONMENT VARIABLES
 echo $(date -I) - ${0##*/} ----------------------------
 env
 echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} Partitions - lsblk
+echo $(date -I) - ${0##*/} ----------------------------
+lsblk -f
+echo $(date -I) - ${0##*/} ----------------------------
 echo $(date -I) - ${0##*/} MOUNTS
 echo $(date -I) - ${0##*/} ----------------------------
 df -h

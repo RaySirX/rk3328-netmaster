@@ -54,8 +54,8 @@ source "arm" "rk3328_rapsbian" {
 }
 
 source "arm" "rk3328_netmaster" {
-  file_urls             = ["${var.distro_url}"]
-  file_checksum_url     = "https://distro.libre.computer/ci/raspbian/11/SHA256SUMS"
+  file_urls             = ["downloads/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img.xz"]
+  file_checksum_url     = "downloads/SHA256SUMS"
   file_checksum_type    = "sha256"
   file_target_extension = "xz"
   file_unarchive_cmd    = ["xz", "--decompress", "$ARCHIVE_PATH"]
@@ -83,27 +83,11 @@ source "arm" "rk3328_netmaster" {
   qemu_binary_source_path      = "/usr/bin/qemu-aarch64-static"
 }
 
-
 # a build block invokes sources and runs provisioning steps on them. The
 # documentation for build blocks can be found here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/build
 build {
-  sources = ["source.arm.rk3328_rapsbian"]
-
-  provisioner "file" {
-      source = "scripts/resizerootfs"
-      destination = "/tmp"
-  }
-
-  provisioner "shell" {
-      script = "scripts/bootstrap_resizerootfs.sh"
-  }
-
-  provisioner "shell" {
-    inline = ["reboot"]
-    expect_disconnect = true
-    pause_after = "60s"
-  }
+  sources = ["source.arm.rk3328_netmaster"]
 
   provisioner "shell" {
     scripts = [
@@ -111,7 +95,8 @@ build {
       "installIt.d/10-raspbian-setup-default-user",
       "installIt.d/20-enable-ssh",
       "installIt.d/25-set-hostname",
-      "installIt.d/45-install-docker",
+      "installIt.d/40-install-unbound",
+      "installIt.d/51-install-pihole",
       "installIt.d/sanity-check",
     ]
   }

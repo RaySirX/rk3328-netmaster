@@ -22,11 +22,4 @@ function usage() {
 
 pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 
-set -x
-cd /root
-
-git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
-cd "Pi-hole/automated install/"
-ls
-set +x
-bash basic-install.sh
+curl -sSL https://install.pi-hole.net
