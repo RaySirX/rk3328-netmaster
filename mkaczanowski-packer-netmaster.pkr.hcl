@@ -99,7 +99,6 @@ build {
       "installIt.d/25-set-hostname",
       "installIt.d/40-install-unbound",
       "installIt.d/50-install-pihole",
-      "installIt.d/60-install-omada-controller",
     ]
   }
 
