@@ -20,7 +20,6 @@ variable "user_password" {
 variable "image_file_name" {
   type      = string
   default   = "netmaster.img"
-  sensitive = true
 }
 
 source "arm" "rk3328_rapsbian" {
@@ -90,14 +89,21 @@ build {
   sources = ["source.arm.rk3328_netmaster"]
 
   provisioner "shell" {
+      script = "installIt.d/sanity-check"
+  }
+
+  provisioner "shell" {
     scripts = [
-      "installIt.d/sanity-check",
       "installIt.d/10-raspbian-setup-default-user",
       "installIt.d/20-enable-ssh",
       "installIt.d/25-set-hostname",
       "installIt.d/40-install-unbound",
-      "installIt.d/51-install-pihole",
-      "installIt.d/sanity-check",
+      "installIt.d/50-install-pihole",
+      "installIt.d/60-install-omada-controller",
     ]
+  }
+
+  provisioner "shell" {
+      script = "installIt.d/sanity-check"
   }
 }

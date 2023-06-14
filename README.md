@@ -62,6 +62,7 @@ sudo apt install rpi-imager
 
 ./secrets
 -DEFAULT_USER_PASS
+echo -n passw0rd | sha256sum | awk '{printf "%s",$1 }' | sha256sum
 
 ## Build It
 ./buildIt
