@@ -1,0 +1,32 @@
+#!/bin/bash -e
+#U
+#U NAME
+#U    60-install-omada-controller - tp-link omada controller
+#U
+#U SYNOPSIS
+#U    60-install-omada-controller <pi_distro_mount_dir>
+#U
+#U DESCRIPTION
+#U    tp-link omada controller
+#U
+#U OPTIONS
+#U    
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+
+download_url=https://static.tp-link.com/upload/software/2023/202303/20230321
+download_file=Omada_SDN_Controller_v5.9.31_Linux_x64.deb
+download_dest_dir=/root/downloads/static-tp-link.com
+
+mkdir -p ${download_dest_dir}
+wget ${download_url}/${download_file} -O ${download_dest_dir}/${download_file}
+
+apt install ${download_dest_dir}/${download_file}
