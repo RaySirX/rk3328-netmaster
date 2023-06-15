@@ -53,7 +53,7 @@ source "arm" "rk3328_rapsbian" {
 }
 
 source "arm" "rk3328_netmaster" {
-  file_urls             = ["downloads/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img.xz"]
+  file_urls             = ["downloads/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz"]
   file_checksum_url     = "downloads/SHA256SUMS"
   file_checksum_type    = "sha256"
   file_target_extension = "xz"
@@ -97,7 +97,6 @@ build {
       "installIt.d/10-raspbian-setup-default-user",
       "installIt.d/20-enable-ssh",
       "installIt.d/25-set-hostname",
-      "installIt.d/40-install-unbound",
       "installIt.d/50-install-pihole",
     ]
   }
