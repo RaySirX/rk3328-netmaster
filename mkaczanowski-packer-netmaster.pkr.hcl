@@ -96,7 +96,7 @@ build {
       "installIt.d/20-enable-ssh",
       "installIt.d/25-set-hostname",
       "installIt.d/40-install-unbound",
-      "installIt.d/51-install-pihole",
+      "installIt.d/50-install-pihole",
       "installIt.d/sanity-check",
     ]
   }
