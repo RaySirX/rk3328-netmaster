@@ -1,7 +1,7 @@
 # rk3328-netmaster
 
 # Headless!  Get over it!
-
+https://libre.computer/products/roc-rk3328-cc/
 Packerized Raspbian Image as a (for now) standalone network master
 
 [SDM!] (https://github.com/gitbls/sdm/blob/master/QuickStart.md)
@@ -47,6 +47,9 @@ sudo sdm --customize --wpa /path/to/working/wpa_supplicant.conf --L10n --restart
 --regen-ssh-host-keys --user myuser --password-user mypassword 2023-05-03-raspios-bullseye-arm64.img
 
 sudo sdm --extend --xmb 4096 --customize --nowpa --L10n --restart --disable piwiz --regen-ssh-host-keys --user config --password-user passw0rd 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img
+
+sudo sdm --customize --nowpa --L10n netmaster-zme0.img
+
 ```
 
 # 

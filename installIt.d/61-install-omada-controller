@@ -26,9 +26,11 @@ download_url=https://static.tp-link.com/upload/software/2023/202303/20230321
 download_file=Omada_SDN_Controller_v5.9.31_Linux_x64.tar.gz
 download_dest_dir=/root/downloads/static-tp-link.com
 
+apt install -y openjdk-17-jdk
+
 mkdir -p ${download_dest_dir}
 curl -L ${download_url}/${download_file} | \
   tar -xz -C ${download_dest_dir} --strip-components=1
 
 cd ${download_dest_dir}
-./install.sh
+./install.sh -y

@@ -8,7 +8,9 @@ cat << EOF > ${BUILD_CONFIG_DIR?}/config.json
   "host_name": "${BUILD_OS_HOSTNAME?}",
   "user_name": "${BUILD_OS_USER?}",
   "user_password": "${BUILD_OS_USER_PASS?}",
-  "image_file_name": "${BUILD_OS_HOSTNAME?}.img"
+  "image_file_name": "${BUILD_OS_HOSTNAME?}.img",
+  "file_url": "downloads/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img.xz",
+  "file_checksum_url": "downloads/SHA256SUMS"
 }
 EOF
 
@@ -28,4 +30,5 @@ docker run --rm --privileged \
   -v ${PWD}:/build \
   mkaczanowski/packer-builder-arm:latest \
   build -var-file /build/buildEnv/config.json \
-    mkaczanowski-packer-netmaster.pkr.hcl
+    -only=docker_netmaster.arm.rk3328_xz_sha256 \
+    ./templates
