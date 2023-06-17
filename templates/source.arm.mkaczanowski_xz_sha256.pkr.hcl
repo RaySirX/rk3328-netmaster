@@ -1,4 +1,4 @@
-source "arm" "rk3328_xz_sha256" {
+source "arm" "mkaczanowski_xz_sha256" {
   file_urls             = ["${var.file_url}"]
   file_checksum_url     = "${var.file_checksum_url}"
   file_checksum_type    = "sha256"
