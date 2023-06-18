@@ -35,7 +35,6 @@ export BUILD_OS_HOSTNAME=${BUILD_OS_HOSTNAME:-netmaster-${UUID4}}
 # source type = arm
 # source name = mkaczanowski_xz_sha256
 export PACKER_BUILD=docker_netmaster.arm.mkaczanowski_xz_sha256
-#export PACKER_BUILD=docker_netmaster.arm.rk3328_xz_sha256
 #
 #
 # initial OS user with sudo
