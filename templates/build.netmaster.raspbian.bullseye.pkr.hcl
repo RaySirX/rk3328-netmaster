@@ -3,7 +3,7 @@
 # https://www.packer.io/docs/templates/hcl_templates/blocks/build
 build {
   name = "netmaster"
-  sources = ["source.arm.rk3328_xz_sha256"]
+  sources = ["${var.build_source_target}"]
 
   provisioner "shell" {
       script = "installIt.d/sanity-check"
