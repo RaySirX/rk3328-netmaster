@@ -1,86 +1,55 @@
 # rk3328-netmaster
 
-# Headless!  Get over it!
-https://libre.computer/products/roc-rk3328-cc/
-Packerized Raspbian Image as a (for now) standalone network master
+PI variant rk3328
 
-[SDM!] (https://github.com/gitbls/sdm/blob/master/QuickStart.md)
-- trying it
-- could do away with packer
-curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash
+Packerized Raspbian Image as a network master
+- pihole + unbound
+- omada controller
 
-# Resize image
-https://8086.support/content/12/100/en/how-do-i-resize-a-disk-image-raspbian-sd_usb-image.html
+## Spotty arm64 support - use dockers for now
+Ideally all software would be directly installed onto PI without adding another layer of virt and control
+Unfortunately, package support for arm64 is still lacking
 
-To resize the last partition in a disk image, for example a Raspberry Pi SD card image first increase the size of the file on disk using truncate, here we're going to increase it by 500MB.
+All software will be installed into dockers running on PI
 
-truncate 2019-06-20-raspbian-buster-full.img --size=+500M
-Once the file size has been increased the size of the second partition need to be updated to use all of the remaining space.
+# Resize image - 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz
 
-parted --script ./2019-06-20-raspbian-buster-full.img resizepart 2 100%
-And then the filesystem will need to be extended to the size of the new partition, first enable access to the partitions in the disk image.
+2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz
+- 2 Gig OS "/" disk
 
-losetup -fP --show 2019-06-20-raspbian-buster-full.img
-This will return the loop device name, in this example we're going to assume it's "/dev/loop1". 
+2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz
+- resized 6 Gig OS "/" disk
 
-Then check the filesystem.
+1. Create copy 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz
+`sudo cp 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz`
 
-e2fsck -f /dev/loop1p2
-Now we can do the actual filesystem resize.
+1. Uncompress image 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz
+`unxz 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz`
 
-resize2fs /dev/loop1p2
-If you see no errors then we're done and we can remove the loop interface.
+2. Resize image using sdm +4 Gigs => 6 Gigs
+`sudo sdm --extend --xmb 4096 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img`
+3. Compress image 
+`xz 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img`
 
-losetup -d /dev/loop1
-
-The size of the disk image has now been extended and the second partition has been increased to use all of the space.
-
-## beware BTRFS!
-```
-truncate 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img --size=+4G
-parted --script ./2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img resizepart 2 100%
-losetup -fP --show 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.bigger.img
-btrfs check /dev/loop0p2
-btrfs filesystem resize max /dev/loop0p2
-```
-sudo sdm --customize --wpa /path/to/working/wpa_supplicant.conf --L10n --restart --disable piwiz \
---regen-ssh-host-keys --user myuser --password-user mypassword 2023-05-03-raspios-bullseye-arm64.img
-
-sudo sdm --extend --xmb 4096 --customize --nowpa --L10n --restart --disable piwiz --regen-ssh-host-keys --user config --password-user passw0rd 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img
-
-sudo sdm --customize --nowpa --L10n netmaster-zme0.img
-
-```
-
-# 
-sudo apt install rpi-imager
-
-## Dockerized onto rk3328
-- TP-Link Omada Controller
-- Unbound DNS
-- PiHole
-
-## Configure It
-./defaults
-
-./secrets
--DEFAULT_USER_PASS
-echo -n passw0rd | sha256sum | awk '{printf "%s",$1 }' | sha256sum
-
-## Build It
-./buildIt
-
-PACKER_CONFIG_DIR=$HOME sudo -E $PACKER build -var-file buildEnv/config.json packer-netmaster.json
-
-## Dependencies
-go version go1.19.3 linux/amd64
+4. Update SHA256 file
+sha256sum *.zx | tee SHA256SUM
 
 ## Build Env Setup
-
-### Scripted
 ./setupBuildEnv
 
-Packer builders
+## Configure It
+### .secrets - export env var of secrets
+- BUILD_OS_USER_PASS - BUILD_OS_USER password
+
+### defaults - export env var of settings
+
+## Build It
+./buildIt 2>&1 | tee buildIt.log
+
+## Dependencies
+### go version go1.19.3 linux/amd64
+
+### Packer builders
 - mkaczanowski builder
 - should also with with solo-io builder
 
@@ -90,10 +59,11 @@ Packer builders
 *DOUBLE DOUBLE CHECK the output device!*
 
 # References
-[mkaczanowski builder Packer Raspbian ] (https://github.com/mkaczanowski/packer-builder-arm) 
-[solo-io builder Packer Raspbian ] (https://github.com/solo-io/packer-plugin-arm-image) 
-
-[hedlund Packer Raspbian] (https://github.com/hedlund/packer-pi-hole)
-
-[Build a Raspberry Pi image with Packer – packer-builder-arm] https://linuxhit.com/build-a-raspberry-pi-image-packer-packer-builder-arm/
-- bdstar -> libarchive-tools
+- [Libre Computer - ROC RK3328] (https://libre.computer/products/roc-rk3328-cc/)
+- [mkaczanowski builder Packer Raspbian ] (https://github.com/mkaczanowski/packer-builder-arm) 
+- [solo-io builder Packer Raspbian ] (https://github.com/solo-io/packer-plugin-arm-image) 
+- [hedlund Packer Raspbian] (https://github.com/hedlund/packer-pi-hole)
+- [Build a Raspberry Pi image with Packer – packer-builder-arm] https://linuxhit.com/build-a-raspberry-pi-image-packer-packer-builder-arm/
+- [SDM!] (https://github.com/gitbls/sdm/blob/master/QuickStart.md)
+`curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash`
+- [Resize OS disk of image] (https://8086.support/content/12/100/en/how-do-i-resize-a-disk-image-raspbian-sd_usb-image.html)
