@@ -14,7 +14,7 @@ export BUILD_CONFIG_DIR=${BUILDENV}/config
 # original image disk too small to install extra software
 # use "6gig" local image with expanded 6 Gig disk
 #
-export PI_REPO=${BUILDENV?}/downloads
+export PI_REPO=buildEnv/downloads
 export PI_DISTRO=2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.6gig.img.xz
 export PI_FILE_CHECKSUM_URL=${PI_REPO}/SHA256SUMS
 #

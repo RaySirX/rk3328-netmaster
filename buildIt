@@ -3,7 +3,10 @@
 [ -f .secrets ] && source .secrets
 [ -f defaults ] && source defaults
 
-cat << EOF > ${BUILD_CONFIG_DIR?}/packer-config.json
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} ${BUILD_CONFIG_DIR?}/packer-config.json
+echo $(date -I) - ${0##*/} ----------------------------
+cat << EOF | tee ${BUILD_CONFIG_DIR?}/packer-config.json
 {
   "host_name": "${BUILD_OS_HOSTNAME?}",
   "user_name": "${BUILD_OS_USER?}",
