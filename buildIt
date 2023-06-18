@@ -30,5 +30,5 @@ docker run --rm --privileged \
   -v ${PWD}:/build \
   mkaczanowski/packer-builder-arm:latest \
   build -var-file /build/buildEnv/config.json \
-    -only=docker_netmaster.arm.mkaczanowski_xz_sha256 \
+    -only=docker_netmaster.arm.rk3328_xz_sha256 \
     ./templates
