@@ -26,3 +26,8 @@ variable "image_file_name" {
   type      = string
   default   = "netmaster.img"
 }
+
+variable "build_source_target" {
+  type      = string
+  default   = "source.arm.mkaczanowski_xz_sha256"
+}
