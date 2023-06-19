@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #U
 #U NAME
-#U    60-install-omada-controller - tp-link omada controller
+#U    Install tp-link omada controller using package
 #U
 #U SYNOPSIS
 #U    60-install-omada-controller <pi_distro_mount_dir>

@@ -42,3 +42,4 @@ export PACKER_BUILD=docker_netmaster.arm.mkaczanowski_xz_sha256
 export BUILD_OS_USER=config
 export BUILD_OS_USER_PASS=${BUILD_OS_USER_PASS?'check .secrets file'}
 export BUILD_OS_DNS_DOMAIN=home
+ 

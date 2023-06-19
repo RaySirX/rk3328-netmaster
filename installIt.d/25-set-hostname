@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #U
 #U NAME
-#U    25-set-hostname - image set hostname
+#U    Image set hostname
 #U
 #U SYNOPSIS
 #U    25-set-hostname <pi_distro_mount_dir> <pi_hostname> <pi_dns_domain>

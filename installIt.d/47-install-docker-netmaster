@@ -1,13 +1,13 @@
 #!/bin/bash -e
 #U
 #U NAME
-#U    Image enable ssh by default
+#U    45-install-docker
 #U
 #U SYNOPSIS
-#U    20-enable-ssh <pi_distro_file>
+#U    50-install-docker <pi_distro_mount_dir>
 #U
 #U DESCRIPTION
-#U    Inject raspbian ssh file into image
+#U    Docker
 #U
 #U OPTIONS
 #U    
@@ -21,5 +21,5 @@ function usage() {
 }
 
 pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+docker pull 
 
-touch ${pi_distro_mount_dir}/boot/firmware/ssh

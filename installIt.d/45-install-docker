@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #U
 #U NAME
-#U    45-install-docker
+#U    Install docker using packages
 #U
 #U SYNOPSIS
 #U    50-install-docker <pi_distro_mount_dir>

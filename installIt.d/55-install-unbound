@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #U
 #U NAME
-#U    40-install-unbound
+#U    Install unbound using package
 #U
 #U SYNOPSIS
 #U    40-install-unbound <pi_distro_mount_dir>
