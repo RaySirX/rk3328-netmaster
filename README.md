@@ -67,3 +67,5 @@ sha256sum *.zx | tee SHA256SUM
 - [SDM!] (https://github.com/gitbls/sdm/blob/master/QuickStart.md)
 `curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash`
 - [Resize OS disk of image] (https://8086.support/content/12/100/en/how-do-i-resize-a-disk-image-raspbian-sd_usb-image.html)
+- [Pi-Hole + Unbound on Docker] (https://github.com/chriscrowe/docker-pihole-unbound)
+- [Omada Controller Docker] (https://github.com/mbentley/docker-omada-controller)
