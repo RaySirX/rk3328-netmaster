@@ -38,3 +38,4 @@ EOF
 
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
+grep -q docker /etc/group && usermod -G docker -a ${BUILD_OS_USER?}
