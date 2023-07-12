@@ -15,6 +15,7 @@ build {
       "installIt.d/20-enable-ssh",
       "installIt.d/25-set-hostname",
       "installIt.d/45-install-docker",
+      "installIt.d/47-install-docker-netmaster",
     ]
   }
 

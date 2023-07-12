@@ -1,0 +1,48 @@
+#!/bin/bash -xe
+
+[ -f .secrets ] && source .secrets
+[ -f defaults ] && source defaults
+
+build_image_filename=${BUILD_OS_HOSTNAME?}.img
+
+echo $(date -I) - ${0##*/} ----------------------------
+echo $(date -I) - ${0##*/} ${BUILD_CONFIG_DIR?}/packer-config.json
+echo $(date -I) - ${0##*/} ----------------------------
+cat << EOF | tee ${BUILD_CONFIG_DIR?}/packer-config.json
+{
+  "host_name": "${BUILD_OS_HOSTNAME?}",
+  "user_name": "${BUILD_OS_USER?}",
+  "user_password": "${BUILD_OS_USER_PASS?}",
+  "image_file_name": "${build_image_filename}",
+  "file_url": "${PI_REPO?}/${PI_DISTRO?}",
+  "file_checksum_url": "${PI_FILE_CHECKSUM_URL?}"
+}
+EOF
+
+#
+# Raspbian OS image is btrfs
+# clear the btrfs cache to prevent "error 32" -> file exists from mounting
+# raspbian image during build
+#
+sudo btrfs device scan --forget
+#
+# mkaczanowski docker packer build
+#
+docker run --rm --privileged \
+  -e DEFAULT_PI_DISTRO_MOUNT_DIR=/ \
+  -e BUILD_OS_USER=${BUILD_OS_USER?} \
+  -e BUILD_OS_USER_PASS=${BUILD_OS_USER_PASS?} \
+  -e BUILD_OS_HOSTNAME=${BUILD_OS_HOSTNAME?} \
+  -e BUILD_OS_DNS_DOMAIN=${BUILD_OS_DNS_DOMAIN?} \
+  -v /dev:/dev \
+  -v ${PWD}:/build \
+  mkaczanowski/packer-builder-arm:latest \
+  build -var-file /build/buildEnv/config/packer-config.json \
+    -only=${PACKER_BUILD} \
+    ./templates
+
+sudo -E sdm --customize --redo-customize --nowpa --L10n --restart --autologin \
+  --regen-ssh-host-keys --disable piwiz \
+  --ssh service \
+  --user ${BUILD_OS_USER?} --password-user ${BUILD_OS_USER_PASS?} \
+  ${build_image_filename}

@@ -23,7 +23,7 @@ function usage() {
 pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 mkdir -p /etc/netmaster
 
-cat << EOF > /netmaster/docker-compose.yml
+cat << EOF > /etc/netmaster/docker-compose.yml
 version: '3.0'
 
 volumes:
@@ -35,7 +35,7 @@ services:
     container_name: pihole
     image: cbcrowe/pihole-unbound:latest
     hostname: ${HOSTNAME}
-    domainname: ${DOMAIN_NAME}
+    domainname: ${BUILD_OS_DNS_DOMAIN}
     ports:
       - 443:443/tcp
       - 53:53/tcp

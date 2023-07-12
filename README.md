@@ -58,7 +58,6 @@ sha256sum *.zx | tee SHA256SUM
 `sudo sdm --customize --L10n --autologin --regen-ssh-host-keys --user ${BUILD_OS_USER?} --password-user ${BUILD_OS_USER_PASS?} 2023-05-03-raspios-bullseye-arm64.img`
 'sudo sdm --burn /dev/sda --hostname mypi1 --expand-root 2023-05-03-raspios-bullseye-arm64.img'
 
-
 `losetup -P /dev/loop0 netmaster.img`
 `dd bs=4M if=/dev/loop0 of=/dev/sda status=progress`
 *DOUBLE DOUBLE CHECK the output device!*
