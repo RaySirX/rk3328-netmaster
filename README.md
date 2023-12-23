@@ -87,8 +87,8 @@ sequenceDiagram
   me ->> bed: get up
 
   me ->> kitchen: make coffee
-  loop Until no fire
-    me -->> management: calm down
+
+    me -->> Management: calm down
     me -->> Code: deep debug
     me -->> Devs: slap
     me -->> QA: pet
