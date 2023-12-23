@@ -79,18 +79,18 @@ sha256sum *.zx | tee SHA256SUM
 ```mermaid
 sequenceDiagram
   autonumber
-  phone -> me: alarm
+  phone ->> me: alarm
   loop Every 5 minutes
-    me --> phone: snooze
+    me -->> phone: snooze
   end
   
-  me -> bed: get up
+  me ->> bed: get up
 
-  me -> kitchen: make coffee
+  me ->> kitchen: make coffee
   alt is out of coffee
-    me -> bed: sleep
+    me ->> bed: sleep
   else
-    me -> office: start typing
+    me ->> office: start typing
   end
 ```
 
