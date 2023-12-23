@@ -89,7 +89,8 @@ sequenceDiagram
   me ->> kitchen: make coffee
 
   me ->> office: start work
-  loop 
+  loop Until no fires
+    me -->> System graphs: stare
     me -->> Management: calm down
     me -->> Code: deep debug
     me -->> Devs: slap
