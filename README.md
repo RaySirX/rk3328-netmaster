@@ -74,36 +74,23 @@ sha256sum *.zx | tee SHA256SUM
 - [Pi-Hole + Unbound on Docker] (https://github.com/chriscrowe/docker-pihole-unbound)
 - [Omada Controller Docker] (https://github.com/mbentley/docker-omada-controller)
 
-# Mermaid
-
-```
-sequenceDiagram
-Alice->>John: Hello John, how are you?
-loop Healthcheck
-    John->>John: Fight against hypochondria
-end
-Note right of John: Rational thoughts!
-John-->>Alice: Great!
-John->>Bob: How about you?
-Bob-->>John: Jolly good!
-```
-
-```mermaid
-sequenceDiagram
-Alice->>John: Hello John, how are you?
-loop Healthcheck
-    John->>John: Fight against hypochondria
-end
-Note right of John: Rational thoughts!
-John-->>Alice: Great!
-John->>Bob: How about you?
-Bob-->>John: Jolly good!
-```
+# Mermaid - My SRE Life
 
 ```mermaid
 sequenceDiagram
   autonumber
-  a ->>+ b: hi
-  b -->- a: there
+  phone -> me: alarm
+  loop Every 5 minutes
+    me --> phone: snooze
+  end
+  
+  me -> bed: get up
+
+  me -> kitchen: make coffee
+  alt is out of coffee
+    me -> bed: sleep
+  else
+    me -> office: start typing
+  end
 ```
 
