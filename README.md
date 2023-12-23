@@ -91,9 +91,9 @@ sequenceDiagram
     me ->> bed: sleep
   else
     loop Until no fire
-      me ->> calm down management
-      me ->> slap devs
-      me ->> pet QA
+      me ->> management: calm down
+      me ->> Devs: slap
+      me ->> QA: pet
       me ->> fixit
   end
 ```
