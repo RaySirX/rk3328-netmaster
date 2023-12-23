@@ -100,3 +100,10 @@ John->>Bob: How about you?
 Bob-->>John: Jolly good!
 ```
 
+```mermaid
+sequenceDiagram
+  autonumber
+  a ->>+ b: hi
+  b -->- a: there
+```
+
