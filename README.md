@@ -76,9 +76,9 @@ sha256sum *.zx | tee SHA256SUM
 
 # Mermaid
 ```mermaid
-sequenceDiagram
-  autonumber;
-
-  a ->>+ b;
-  b -->- a;
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ```
