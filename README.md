@@ -74,6 +74,7 @@ sha256sum *.zx | tee SHA256SUM
 - [Pi-Hole + Unbound on Docker] (https://github.com/chriscrowe/docker-pihole-unbound)
 - [Omada Controller Docker] (https://github.com/mbentley/docker-omada-controller)
 
+# Mermaid
 ```mermaid
 sequenceDiagram
   autonumber;
