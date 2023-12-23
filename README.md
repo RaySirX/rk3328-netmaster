@@ -88,6 +88,8 @@ sequenceDiagram
 
   me ->> kitchen: make coffee
 
+  me ->> office: start work
+  loop 
     me -->> Management: calm down
     me -->> Code: deep debug
     me -->> Devs: slap
