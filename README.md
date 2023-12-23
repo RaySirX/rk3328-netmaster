@@ -92,9 +92,9 @@ sequenceDiagram
   else
     loop Until no fire
       me ->> management: calm down
+      me ->> Code: deep debug
       me ->> Devs: slap
       me ->> QA: pet
-      me ->> fixit
   end
 ```
 
