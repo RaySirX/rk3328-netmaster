@@ -87,14 +87,10 @@ sequenceDiagram
   me ->> bed: get up
 
   me ->> kitchen: make coffee
-  alt is out of coffee
-    me ->> bed: sleep
-  else
-    loop Until no fire
-      me ->> management: calm down
-      me ->> Code: deep debug
-      me ->> Devs: slap
-      me ->> QA: pet
-  end
+  loop Until no fire
+    me ->> management: calm down
+    me ->> Code: deep debug
+    me ->> Devs: slap
+    me ->> QA: pet
 ```
 
