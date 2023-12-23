@@ -88,9 +88,12 @@ sequenceDiagram
 
   me ->> kitchen: make coffee
 
-  phone ->> me: alarm
-  loop Every 5 minutes
-    me -->> phone: snooze
+  loop Until no fires
+    me -->> System graphs: stare
+    me -->> Management: calm down
+    me -->> Code: deep debug
+    me -->> Devs: slap
+    me -->> QA: pet
   end
 ```
 
