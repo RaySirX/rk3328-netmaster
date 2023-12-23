@@ -90,7 +90,11 @@ sequenceDiagram
   alt is out of coffee
     me ->> bed: sleep
   else
-    me ->> office: start typing
+    loop Until no fire
+      me ->> calm down management
+      me ->> slap devs
+      me ->> pet QA
+      me ->> fixit
   end
 ```
 
